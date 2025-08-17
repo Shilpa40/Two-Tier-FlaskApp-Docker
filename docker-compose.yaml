@@ -1,0 +1,37 @@
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-cont
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - appnet
+
+  flask-app:
+    image: shilpabains/two-tier-flaskapp-docker:v1
+    container_name: flask-app
+    ports:
+      - "5000:5000"
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DB: mydb
+    depends_on:
+      - mysql
+    networks:
+      - appnet
+    restart: always
+
+networks:
+  appnet: 
+
+volumes:
+  mysql_data:
