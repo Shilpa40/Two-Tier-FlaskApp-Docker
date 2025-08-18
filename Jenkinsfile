@@ -6,7 +6,8 @@ pipeline{
             steps{
                 script {
                     // Checkout the code from the repository
-                    clone('https://github.com/Shilpa40/Two-Tier-FlaskApp-Docker.git', 'main')
+                    git url: 'https://github.com/Shilpa40/Two-Tier-FlaskApp-Docker.git' 
+                    branch: 'main'
                 }
             }
         }
@@ -56,9 +57,5 @@ pipeline{
                 }
             }
         }
-
-
-
-
     }
 }
