@@ -15,7 +15,7 @@ services:
       - appnet
 
   flask-app:
-    image: shilpabains/two-tier-flaskapp-docker:v1
+    image: shilpabains/flaskapp:${DOCKER_IMAGE_TAG}
     container_name: flask-app
     ports:
       - "5000:5000"

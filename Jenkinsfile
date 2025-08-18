@@ -1,6 +1,9 @@
 pipeline{
     agent any
-
+    environment {
+            DOCKER_IMAGE_NAME = "flaskapp"
+            DOCKER_IMAGE_TAG = "${env.BUILD_NUMBER}" // Or a more complex tag, e.g., "v1.${env.BUILD_NUMBER}"
+        }
     stages{
         stage('Checkout Code'){
             steps{
@@ -26,7 +29,7 @@ pipeline{
             steps{
                 script {
                     // Build the Docker image
-                    sh "docker build -t flaskapp:$BUILD_NUMBER ."
+                    sh "docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ."
                 }
             }
         }
@@ -35,7 +38,7 @@ pipeline{
             steps{
                 script {
                     // Tagging the Docker image
-                    sh "docker tag flaskapp:$Build_NUMBER index.docker.io/shilpabains/flaskapp:$BUILD_NUMBER"
+                    sh "docker tag ${DOCKER_IMAGE_NAME}:$Build_NUMBER index.docker.io/shilpabains/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
                 }
             }
         }
@@ -44,7 +47,7 @@ pipeline{
             steps{
                 script {
                     // Push the Docker image to Docker Hub
-                    sh "docker push index.docker.io/shilpabains/flaskapp:$BUILD_NUMBER"
+                    sh "docker push index.docker.io/shilpabains/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
                 }
             }
         }
@@ -53,7 +56,7 @@ pipeline{
             steps{
                 script {
                     // Deploy the application using Docker Compose
-                    sh "docker-compose up -d --build flask-app"
+                    sh "DOCKER_IMAGE_TAG=${DOCKER_IMAGE_TAG} docker-compose up -d --build flask-app"
                 }
             }
         }
