@@ -35,7 +35,7 @@ pipeline{
             steps{
                 script {
                     // Tagging the Docker image
-                    sh "docker tag flaskapp:$Build_NUMBER index.docker.io/${env.DOCKER_USER}/flaskapp:$BUILD_NUMBER"
+                    sh "docker tag flaskapp:$Build_NUMBER index.docker.io/shilpabains/flaskapp:$BUILD_NUMBER"
                 }
             }
         }
@@ -44,7 +44,7 @@ pipeline{
             steps{
                 script {
                     // Push the Docker image to Docker Hub
-                    sh "docker push index.docker.io/${env.DOCKER_USER}/flaskapp:$BUILD_NUMBER"
+                    sh "docker push index.docker.io/shilpabains/flaskapp:$BUILD_NUMBER"
                 }
             }
         }
