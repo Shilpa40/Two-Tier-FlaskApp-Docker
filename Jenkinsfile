@@ -6,7 +6,7 @@ pipeline{
             steps{
                 script {
                     // Checkout the code from the repository
-                    git url: 'https://github.com/Shilpa40/Two-Tier-FlaskApp-Docker.git' 
+                    git url: 'https://github.com/Shilpa40/Two-Tier-FlaskApp-Docker.git',
                     branch: 'main'
                 }
             }
